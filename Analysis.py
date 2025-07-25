@@ -2,11 +2,13 @@
 import pandas as pd
 
 from scipy.signal import find_peaks
+from scipy.stats import mannwhitneyu
 import statistics
 from prettytable import PrettyTable
 
 from Inputs import *
 from Outputs import *
+from SideFunctions import *
 
 
 # Calculer le spectre moyen de tous les spectres sauvés
@@ -287,15 +289,16 @@ def IdentifyFirstShotsDifference(LIBS, PeakIs, ConfInterval, showgraph):
         PeakIntensities = LIBS[0].iloc[intpeak].tolist()[1:-3]
 
         # Faire test d'ergodicité selon le pourcentage de certitude attendu par ConfInterval
-        #mannwhiteneyu
-        
-        
-        if showgraph:
-            # Afficher dans un graphique y intensité, x # du tir et avoir une courbe par position + une asymptote verticale du nombre de tirs choisi à retirer
-            None
-            
-        # Ajouter le nombre de tirs à retirer dans Ntirsremove
+        # Faire le test pour chaque pic dès le début et enlever dès que ça devient différent
+        remove = GetNRemove(PeakIntensities, ConfInterval)    
+        NTirsRemove.append(remove)
             
     # À partir de chaque NTirs à enlever, faire le choix du nombre de tirs à retirer globalement (voir si outlier, si oui, ignorer et passer au max suivant)
+    finalCutoff = NTirsRemove[0]
+
+    # Pour valider si bon sur le dataset       
+    if showgraph:
+        # Afficher dans un graphique y intensité, x # du tir et avoir une courbe par position + une asymptote verticale du nombre de tirs choisi à retirer
+        PrintIntensityTime(PeakIs, LIBS, NTirsRemove, finalCutoff)
 
     return NTirsRemove
