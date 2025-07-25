@@ -1,2 +1,3 @@
 # Files ignored by the git distribution, includes also the directories ignored by git for privacy reasons for instance
 .vs/
+Raies/
