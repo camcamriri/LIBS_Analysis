@@ -7,11 +7,12 @@ from Outputs import *
 
 
 # Début du code
+folder = "Raies"
 files = "GaInSn_"
 terminaison = ".txt"
 
-fichiers, names = GrabLIBSSpectra(files, terminaison)
-LIBS, LIBSrepeat, Nshots, spec_lambda = ReadLIBSSpectra(fichiers)
+fichiers, names = GrabLIBSSpectra(folder, files, terminaison)
+LIBS, LIBSrepeat, Nshots, spec_lambda = ReadLIBSSpectra(folder, fichiers)
 AvgLIBS = GetAvgLIBS(LIBS, Nshots, False, True)
 
 

@@ -55,7 +55,11 @@ def readlibslines(lines):
 
 
 # Connaître les noms des spectres
-def GrabLIBSSpectra(common_name, terminaison):
+def GrabLIBSSpectra(folder, common_name, terminaison):
+    # Move to the folder where the files are located
+    os.chdir(folder)
+
+    # Grab the stuff
     documents = os.listdir(os.getcwd())
     fichiers = []
     names = []
@@ -64,15 +68,23 @@ def GrabLIBSSpectra(common_name, terminaison):
             if text.endswith(terminaison):
                 fichiers.append(text)
                 names.append(text.rstrip(terminaison))
+                
+    # Move back in the main folder
+    os.chdir('..')            
 
     return fichiers, names
 
 
 # Read content of the libs spectra file
-def ReadLIBSSpectra(fichiers):
+def ReadLIBSSpectra(folder, fichiers):
+    # Go in directory with files
+    os.chdir(folder)
+    
+    # Read the files
     LIBS = []
     LIBSrepeat = []
     Nshots = []
+    spec_lambda = []
     for filename in fichiers:
         with open(filename, 'r') as fID:
             lines = fID.readlines()
@@ -82,5 +94,8 @@ def ReadLIBSSpectra(fichiers):
         LIBS.append(mean)
         LIBSrepeat.append(repeats)
         Nshots.append(nshots)
+
+    # Go back to main
+    os.chdir('..')    
 
     return LIBS, LIBSrepeat, Nshots, spec_lambda
