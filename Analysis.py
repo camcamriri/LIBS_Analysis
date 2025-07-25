@@ -289,6 +289,7 @@ def IdentifyFirstShotsDifference(LIBS, PeakIs, ConfInterval, showgraph):
         # Faire test d'ergodicité selon le pourcentage de certitude attendu par ConfInterval
         #mannwhiteneyu
         
+        
         if showgraph:
             # Afficher dans un graphique y intensité, x # du tir et avoir une courbe par position + une asymptote verticale du nombre de tirs choisi à retirer
             None
